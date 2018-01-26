@@ -1,0 +1,42 @@
+<!-- frank.com:8001前端 -->
+
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>frank.com:8001前端</title>
+</head>
+<body>
+    <p>当前余额：<span id=amount>100</span></p>
+    <button id="button">付款1元</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        button.addEventListener('click' (e)=>{
+            $.ajax({
+                url:'http:// jack.com:8002/pay',
+                dataType:"jsonp",
+                success:function(response){
+                    if (response ==='success'){
+                        amount.innerText = amount.innerText -1;
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>  
+
+
+
+<!-- //jack.com:8002 后端 -->
+
+if(path==='/pay'){
+    var amount = fs.readFileSync('./db','utf-8')
+    var newAmount = amount -1
+    fs.writeFileSync('./db',newAmount)
+    response.setHeader('Content-Type','application/javascript')
+    response.statusCode =200
+    response.write($query.callback).call(undefined,'success')
+    response.end()
+}
