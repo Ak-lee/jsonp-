@@ -26,17 +26,3 @@
     </script>
 </body>
 </html>  
-
-
-
-<!-- //jack.com:8002 后端 -->
-
-if(path==='/pay'){
-    var amount = fs.readFileSync('./db','utf-8')
-    var newAmount = amount -1
-    fs.writeFileSync('./db',newAmount)
-    response.setHeader('Content-Type','application/javascript')
-    response.statusCode =200
-    response.write($query.callback).call(undefined,'success')
-    response.end()
-}
